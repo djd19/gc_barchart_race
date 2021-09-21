@@ -77,8 +77,6 @@ class BCGenerator:
 
         return self.count_df.index
 
-
-    # TODO:
     def assign_names(self, name_map):
         """Convert phone numbers into names.
 
@@ -90,8 +88,7 @@ class BCGenerator:
         name_map : dictionary
         """
 
-        pass
-
+        self.count_df = self.count_df.rename(columns=name_map)
 
     # TODO:
     def assign_colors(self):
