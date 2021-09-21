@@ -110,9 +110,10 @@ class BCGenerator:
     def _draw_barchart(self, date, ax, n=10):
 
         day = self.cumulative_count_df.loc[date].sort_values().tail(n)
+        persons = day.index
 
         ax.clear()
-        ax.barh(day.index, day)
+        ax.barh(persons, day, color=self.colors.loc[persons])
 
         str_date = datetime.datetime.strftime(date, "%Y-%m-%d")
         ax.text(1, 0.4, str_date, transform=ax.transAxes, color="#777777",
@@ -139,5 +140,3 @@ class BCGenerator:
             frames=self.dates, interval=time_interval_between_frames)
 
         HTML(animator.save(self.save_path))
-
-print(BCGenerator("_2021_year1").colors)
