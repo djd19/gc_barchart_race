@@ -65,6 +65,7 @@ class BCGenerator:
 
         df.reindex(pd.date_range(start_date, end_date, freq="D"))
         df = df.fillna(0)
+        df = df.sort_index()
         
         if self.name_map is not None:
             df = df.rename(columns=self.name_map)
