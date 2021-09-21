@@ -89,11 +89,23 @@ class BCGenerator:
 
         return self.count_df.columns
 
-    # TODO:
-    def assign_colors(self):
+    @cached_property
+    def colors(self):
         """Keep colors the same for each person."""
 
-        pass
+        color_codes = [
+            '#c3e0c9', '#d6f6dd', '#d8ddea',
+            '#dac4f7', '#e7aeca', '#f4989c',
+            '#f0b5a8', '#ebd2b4', '#ccdfd6',
+            '#acecf7',
+            ]
+
+        ser = pd.Series({
+            name: color_codes[(i**2)%10]
+            for i, name in enumerate(self.names)
+            })
+
+        return ser
 
     def _draw_barchart(self, date, ax, n=10):
 
@@ -127,3 +139,5 @@ class BCGenerator:
             frames=self.dates, interval=time_interval_between_frames)
 
         HTML(animator.save(self.save_path))
+
+print(BCGenerator("_2021_year1").colors)
