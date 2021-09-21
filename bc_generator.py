@@ -14,7 +14,7 @@ from IPython.display import HTML
 class BCGenerator:
 
     def __init__(self, folder_path, data_path=None,
-                 save_path=None,
+                 save_path=None, name_map=None,
                  title="Group Chat Message Count"):
         """Initialise instance.
 
@@ -30,6 +30,10 @@ class BCGenerator:
 
         self.folder_path = folder_path
         self.title = title
+
+        if name_map is not None:
+            assert isinstance(name_map, dict), f"name_map must be a dict. Received a {type(name_map).__name__}."
+        self.name_map = name_map
 
         self.data_path = f"{folder_path}/data.txt" if data_path is None else data_path
         self.save_path = f"{folder_path}/barchart_race.mp4" if save_path is None else save_path
@@ -61,6 +65,9 @@ class BCGenerator:
 
         df.reindex(pd.date_range(start_date, end_date, freq="D"))
         df = df.fillna(0)
+        
+        if self.name_map is not None:
+            df = df.rename(columns=self.name_map)
 
         return df
 
@@ -76,19 +83,6 @@ class BCGenerator:
     def dates(self):
 
         return self.count_df.index
-
-    def assign_names(self, name_map):
-        """Convert phone numbers into names.
-
-        If multiple phone numbers are assigned to one name,
-        then their chat count will be summed.
-
-        Parameters
-        ----------
-        name_map : dictionary
-        """
-
-        self.count_df = self.count_df.rename(columns=name_map)
 
     # TODO:
     def assign_colors(self):
