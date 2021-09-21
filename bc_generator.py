@@ -6,6 +6,7 @@ import matplotlib.ticker as ticker
 import matplotlib.animation as animation
 
 
+from argparse import ArgumentParser, RawTextHelpFormatter
 from functools import cached_property
 from collections import defaultdict
 from IPython.display import HTML
@@ -141,3 +142,27 @@ class BCGenerator:
             frames=self.dates, interval=time_interval_between_frames)
 
         HTML(animator.save(self.save_path))
+
+
+if __name__ == "__main__":
+
+    description = """Generate barchart race.
+
+    Create a folder that contains the data
+    in a file called data.txt Pass in the path
+    to the folder as an argument. E.g.,
+
+    python3 bc_generator.py folder_path
+"""
+
+    parser = ArgumentParser(description=description,
+                            formatter_class= RawTextHelpFormatter)
+
+    parser.add_argument("folder", nargs=1)
+    args = parser.parse_args()
+
+    folder_path = args.folder[0]
+
+    # TODO: Allow some functionality to specify args and kwargs.
+    bcg = BCGenerator(folder_path)
+    bcg.generate_barchart()
