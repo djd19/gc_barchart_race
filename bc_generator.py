@@ -12,6 +12,7 @@ from collections import defaultdict
 from IPython.display import HTML
 
 
+# TODO: Clean up class and add some docstring. 
 class BCGenerator:
 
     def __init__(self, folder_path, data_path=None,
@@ -44,6 +45,7 @@ class BCGenerator:
 
         data = defaultdict(lambda: defaultdict(int))
 
+        # TODO: Allow this to be specified.
         pattern = re.compile(
             r"(\d{1,2}\/\d{1,2}\/\d{2}), (\d{1,2}:\d{1,2}) - ([^:]*):")
         date_format = "%m/%d/%y"
@@ -142,6 +144,9 @@ class BCGenerator:
             frames=self.dates, interval=time_interval_between_frames)
 
         HTML(animator.save(self.save_path))
+
+
+# TODO: Consider a sensible way to allow stitching of different records together
 
 
 if __name__ == "__main__":
