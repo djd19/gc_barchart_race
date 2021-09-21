@@ -113,12 +113,18 @@ class BCGenerator:
                 ha='right', color='#777777',
                 bbox=dict(facecolor='white', alpha=0.8, edgecolor='white'))
 
-    def generate_barchart(self, *args, **kwargs):
+    def generate_barchart(self, time_interval_between_frames=200, *args, **kwargs):
+        """Save Bar Chart Animation race.
 
-        # TODO: Find out how to adjust the frame rate.
+        Parameters
+        ----------
+        interval_between_frames : int
+            Time in milliseconds between frames.
+        """
+
         fig, ax = plt.subplots(figsize=(15, 8))
         animator = animation.FuncAnimation(
             fig, lambda date: self._draw_barchart(date, ax, *args, **kwargs),
-            frames=self.dates)
+            frames=self.dates, interval=time_interval_between_frames)
 
         HTML(animator.save(self.save_path))
