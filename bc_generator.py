@@ -84,6 +84,11 @@ class BCGenerator:
 
         return self.count_df.index
 
+    @cached_property
+    def names(self):
+
+        return self.count_df.columns
+
     # TODO:
     def assign_colors(self):
         """Keep colors the same for each person."""
